@@ -5,7 +5,7 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score 
 
-class historic_data:
+class HistoricData:
     def __init__(self, csv_path):
         self.csv_path = csv_path
         self.df = None
@@ -52,11 +52,11 @@ class historic_data:
 
     def evaluate_model(self):
         Y_pred = self.model.predict(self.X)
-        r2 = r2_score(self.Y, Y_pred)
+        self.r2 = r2_score(self.Y, Y_pred)
         print(f"R2 verdien er {r2}")
     
 
-class prediction_10years:
+class Prediction10Years:
     def __init__(self, historic_obj):
         self.df = historic_obj.df
         self.X = historic_obj.X
