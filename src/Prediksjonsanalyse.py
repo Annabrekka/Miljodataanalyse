@@ -49,6 +49,11 @@ class historic_data:
         plt.legend()
         plt.tight_layout()
         plt.show()
+
+    def evaluate_model(self):
+        Y_pred = self.model.predict(self.X)
+        r2 = r2_score(self.Y, Y_pred)
+        print(f"R2 verdien er {r2}")
     
 
 class prediction_10years:
@@ -74,24 +79,17 @@ class prediction_10years:
             print(f"Predikert gjennomsnittstemperatur for {self.current_year + i}: {prediction:.2f}")
 
 
-   """  def future_predictions(self, ):
-        # Bruker modellen over for å predikere de 10 årene fram i tid
-        future_predictions = model.predict(predict_years)
-
-        # Lager er for-løkke som itererer gjennom fututre_prediuctions, og printer det ut
-        for i, prediction in enumerate(future_predictions, start=1):
-        print(f"Predikert gjennomsnittstemperatur for {current_year + i}: {prediction:.2f}") """
-
+  
     def predictions_plot(self,title, unit):
         # Plotter dataene og prediksjonene
         plt.scatter(self.X, self.Y, color='blue', label='Historiske data')
-        plt.plot(self.X, self.model.predict(X), color='green', label='Lineær regresjonsmodell') # Lineær graf tilpasset historisk data
+        plt.plot(self.X, self.model.predict(self.X), color='green', label='Lineær regresjonsmodell') # Lineær graf tilpasset historisk data
         plt.plot(self.predict_years, self.future_predictions, color='red', linestyle='dashed', label='Prediksjoner for kommende år') # Lineær graf som predikerer 10 år fram i tid
 
         # Legger til navn på akser, tittel og viser plot
-        plt.title('title')   
+        plt.title(title)   
         plt.xlabel('År')
-        plt.ylabel('unit')
+        plt.ylabel(unit)
         plt.legend()
         plt.tight_layout()
         plt.show()
