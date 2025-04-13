@@ -53,7 +53,7 @@ class HistoricData:
     def evaluate_model(self):
         Y_pred = self.model.predict(self.X)
         self.r2 = r2_score(self.Y, Y_pred)
-        print(f"R2 verdien er {r2}")
+        print(f"R2 verdien er {self.r2}")
     
 
 class Prediction10Years:
@@ -74,6 +74,7 @@ class Prediction10Years:
 
 
     def predict_future(self):
+        # Lager prediksjoner for fremtidige år, ved å iterere gjennom de fremtidige årene
         self.future_predictions = self.model.predict(self.predict_years)
         for i, prediction in enumerate(self.future_predictions, start=1):
             print(f"Predikert gjennomsnittstemperatur for {self.current_year + i}: {prediction:.2f}")
