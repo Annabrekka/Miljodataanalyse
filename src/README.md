@@ -1,3 +1,3 @@
 Under denne mappen "src" er det flere filer som inneholder klasser og funksjoner som kalles og brukes under "notebooks".
 
-I filen "Prediksjonsanalyse.py" er det to klasser med flere funksjoner. Klassene "HistoricData" og "Predictions10years" bruker scikit-learn for å lage en modell og lære den opp fra historisk data til å predikere fremtidig data. Til slutt blir dette vist fram i et plot. Disse klassene og funksjonene blir kalt under mappen "notebooks" i filen "Oppgave_6".
+I filen "Prediksjonsanalyse.py" er det to klasser med flere funksjoner. Klassene "HistoricData" og "Predictions10years" bruker scikit-learn for å lage en modell og lære den opp fra historisk data til å predikere fremtidig data. Til slutt blir dette vist fram i et plot. Disse klassene og funksjonene blir kalt under mappen "notebooks" i filen "Prediksjon.ipynb".
