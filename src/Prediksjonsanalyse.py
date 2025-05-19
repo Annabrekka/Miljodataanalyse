@@ -27,10 +27,11 @@ class HistoricData:
 
 
     def train_model(self):
+        # Skal trene en modell, men må passe på at den ikke trener den uten data eller for en tom dataframe
         if self.df is None:
-            raise ValueError # Kan ikke trene modellen uten data
+            raise ValueError("Kan ikke trene modellen uten data") 
         if self.df.empty:
-            raise ValueError # Kan ikke trene modellen med en tom dataframe
+            raise ValueError("Kan ikke trene modellen med en tom dataframe") 
         #trener modellen, basert på x- og y-verdier
         self.X = self.df['year'].values.reshape(-1, 1)
         self.Y = self.df['value'].values
