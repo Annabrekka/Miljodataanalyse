@@ -15,6 +15,11 @@ class HistoricData:
 
 
     def read_file(self, maaned):
+        # Passer på at det kun er gyldig data for maaneden
+        if not isinstance(maaned, int):
+            raise TypeError ("Skriv inn et tall, ikke streng")
+        if maaned < 1 or maaned > 12:
+            raise ValueError ("Kun maaneder mellom 1 og 12")
        # Leser csv-filen
         self.df = pd.read_csv(self.csv_path)
         # Endrer til å kun bruke verdier for juli
@@ -22,13 +27,17 @@ class HistoricData:
 
 
     def train_model(self):
-        #trener modellen, baser på x- og y-verdier
+        if self.df is None:
+            raise ValueError # Kan ikke trene modellen uten data
+        if self.df.empty:
+            raise ValueError # Kan ikke trene modellen med en tom dataframe
+        #trener modellen, basert på x- og y-verdier
         self.X = self.df['year'].values.reshape(-1, 1)
         self.Y = self.df['value'].values
         self.model.fit(self.X, self.Y)
 
 
-    def plot_data(self, title):
+    def plot_data(self, title,ylabel):
         # Finner de historiske prediksjonene
         X_sorted = np.sort(self.X, axis = 0)
         y_train = self.model.predict(X_sorted)
@@ -45,7 +54,7 @@ class HistoricData:
         # Legger til labels
         plt.title(title)
         plt.xlabel('År')
-        plt.ylabel('Temperatur')
+        plt.ylabel(ylabel)
         plt.legend()
         plt.tight_layout()
         plt.show()
