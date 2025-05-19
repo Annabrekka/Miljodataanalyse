@@ -4,7 +4,7 @@ from pandas import json_normalize
 
 
 
-
+#Her opretter jeg klassen "DataCleaner" som brukes til å rense og håndtere data. 
 class DataCleaner:
 
     def __init__(self, data):
@@ -42,6 +42,8 @@ class DataCleaner:
 
 
 
+
+#Klassen "DataQualitychecker brukes til å sjekke kvaliteten på dataene og fanger opp eventuelle problem. 
 class DataQualityChecker:
     def __init__(self, df):
         self.df = df
@@ -62,5 +64,30 @@ class DataQualityChecker:
         print(f"Ekstreme verdier i {column} over {threshold}:\n", extremes)
         return extremes
 
+
+#Klassen "ObservationProcessor" brukes til å hente og strukturere observasjoner fra dataene. 
+class ObservationProcessor:
+    def __init__(self, data):
+        self.data = data
+        self.rows = []
+
+    def extract_observations(self):
+        for i in range(len(self.data)):
+            try:
+                entry = self.data[i]
+                observations = entry.get('observations', None)
+                referenceTime = entry.get('referenceTime', None)
+                sourceId = entry.get('sourceId', None)
+
+                if observations is not None:
+                    for obs in observations:
+                        obs['referenceTime'] = referenceTime
+                        obs['sourceId'] = sourceId
+                        self.rows.append(obs)
+                else:
+                    print(f"Observations not found for index {i}")
+            except KeyError as e:
+                print(f"KeyError: {e} at index {i}")
+        return self.rows
 
 
