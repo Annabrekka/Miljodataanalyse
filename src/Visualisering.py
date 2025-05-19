@@ -48,18 +48,20 @@ import ipywidgets as widgets
 from IPython.display import display
 
 class InteraktivVisualisering:
-    def __init__(self, df):
+    def __init__(self, df, datatype, kolonne):
         self.df = df.copy()
+        self.datatype = datatype
+        self.kolonne = kolonne
         self._forbered_data()
         self.dato_slider = self._lag_dato_slider()
         self._vis_interaktiv_graf()
 
     def _forbered_data(self):
-        """Konverterer år og måned til en datetime-kolonne."""
+        #Konverterer år og måned til en datetime-kolonne.
         self.df['date'] = pd.to_datetime(self.df[['year', 'month']].assign(day=1))
 
     def _lag_dato_slider(self):
-        """Returnerer en SelectionRangeSlider-widget for datointervall."""
+        #Returnerer en SelectionRangeSlider-widget for datointervall.
         unike_datoer = self.df['date'].dt.date.unique().tolist()
         return widgets.SelectionRangeSlider(
             options=unike_datoer,
@@ -69,30 +71,52 @@ class InteraktivVisualisering:
         )
 
     def _oppdater_graf(self, dato_range):
-        """Oppdateringsfunksjon for grafen basert på valgt datointervall."""
+        #Oppdateringsfunksjon for grafen basert på valgt datointervall.
         start, slutt = pd.to_datetime(dato_range[0]), pd.to_datetime(dato_range[1])
         filtrert = self.df[(self.df['date'] >= start) & (self.df['date'] <= slutt)]
 
         plt.figure(figsize=(10, 5))
         plt.plot(filtrert['date'], filtrert['value'], marker='o', linestyle='-', color='b')
-        plt.title("Nedbør over tid")
+        plt.title(self._hent_tittel())
         plt.xlabel("Dato")
-        plt.ylabel("Nedbør (mm)")
+        plt.ylabel(self._hent_enhet())
         plt.grid(True)
         plt.show()
 
+    def _hent_tittel(self):
+        if self.datatype == 'nedbor':
+            return 'Nedbør over tid'
+        elif self.datatype == 'temp':
+            return 'Temperatur over tid'
+        elif self.datatype == 'wind':
+            return 'Vind over tid'
+        else:
+            return 'Data'
+
+    def _hent_enhet(self):
+        if self.datatype == 'nedbor':
+            return 'Nedbør (mm)'
+        elif self.datatype == 'temp':
+            return 'Temperatur (°C)'
+        elif self.datatype == 'wind':
+            return 'Vind (m/s)'
+        else:
+            return 'Enhet'
+
     def _vis_interaktiv_graf(self):
-        """Kobler widget til oppdateringsfunksjonen og viser grafen."""
+        #Kobler widget til oppdateringsfunksjonen og viser grafen.
         widgets.interact(self._oppdater_graf, dato_range=self.dato_slider)
+
 
 # Scatterplot av værdata
 import pandas as pd
 import matplotlib.pyplot as plt
 
 class ScatterPlot:
-    def __init__(self, file_path, datatype, month=7):
+    def __init__(self, file_path, datatype, kolonne, month=7):
         self.file_path = file_path
         self.datatype = datatype
+        self.kolonne = kolonne
         self.month = month
         self.df = self._les_inn_data()
         self.df_filtrert = self._filtrer_data()
@@ -107,12 +131,12 @@ class ScatterPlot:
 
     def plot_data(self):
         plt.figure(figsize=(10, 5))
-        plt.scatter(self.df_filtrert["date"], self.df_filtrert[self.datatype], marker="o", color="b", label=self.datatype)
+        plt.scatter(self.df_filtrert["date"], self.df_filtrert[self.kolonne], marker="o", color="b", label=self.datatype)
 
         # Tilpass plottet
         plt.xlabel("År")
         plt.ylabel(self._hent_enhet())
-        plt.title(f"{self._hent_tittel()} i juli over tid")
+        plt.title(self._hent_tittel())
         plt.legend()
         plt.grid(True)
 
@@ -120,17 +144,17 @@ class ScatterPlot:
         plt.show()
 
     def _hent_tittel(self):
-        if self.datatype == 'value':
-            return 'Nedbør'
+        if self.datatype == 'nedbor':
+            return 'Nedbør i juli over alle år'
         elif self.datatype == 'temp':
-            return 'Temperatur'
+            return 'Temperatur i juli over alle år'
         elif self.datatype == 'wind':
-            return 'Vind'
+            return 'Vind i juli over alle år'
         else:
             return 'Data'
 
     def _hent_enhet(self):
-        if self.datatype == 'value':
+        if self.datatype == 'nedbor':
             return 'Nedbør (mm)'
         elif self.datatype == 'temp':
             return 'Temperatur (°C)'
@@ -138,3 +162,4 @@ class ScatterPlot:
             return 'Vind (m/s)'
         else:
             return 'Enhet'
+
