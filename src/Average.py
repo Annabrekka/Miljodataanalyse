@@ -44,7 +44,7 @@ class FindStd(Data):
         grouped = self.prepare_data(parameter)
         monthly_std_per_year = grouped["value"].std().reset_index()
         monthly_std_per_year["value"] = monthly_std_per_year["value"].round(3)
-        monthly_std_per_year.to_csv(f'../data/Avarage/std_{unit}.csv')
+        monthly_std_per_year.to_csv(f'../data/Avarage/standard_{unit}.csv')
         print(f"Standardavvik for {unit}")
         print(monthly_std_per_year.head())
         
