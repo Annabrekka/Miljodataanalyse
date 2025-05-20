@@ -1,6 +1,10 @@
 import unittest
 import pandas as pd
+import sys
+import os
 from pandas import json_normalize
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from src.Weather_analysis import DataCleaner, DataQualityChecker, ObservationProcessor
 
 #TestDataCleaner tester klassen Datacleaner. 
@@ -102,18 +106,8 @@ class TestObservationProcessor(unittest.TestCase):
 
 
 
-#Laster ned begge testene fra begge klassene og legger den til i suite. 
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestDataCleaner))
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestDataQualityChecker))
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestObservationProcessor))
-    return suite
-
-#Kjører nå testene. Bruker verbosity=2 som gir mer detaljerte rapporter. 
-if __name__ == '__main__':
-    runner = unittest.TextTestRunner(verbosity=2)  
-    runner.run(suite())  
+if __name__=='__main__':
+    unittest.main()
 
 
 

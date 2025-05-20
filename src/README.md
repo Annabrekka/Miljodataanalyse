@@ -2,6 +2,10 @@ Under denne mappen "src" er det flere filer som inneholder klasser og funksjoner
 
 
 Beskrivelse av filene:
+"Weather_analysis.py"
+I denne filen er det laget 3 klasser som består av ulike funksjoner som vi bruker helt i starten av prosjektet for å bearbeide rådata. Klassen "Datacleaner" blir brukt til å få overført alle målingene til en ryddig dataframe. Videre inneholder klassen funskjoner slik at vi kan rense bort unødvendige kolonner og endre navn til mer presise kolonnenavn. Klassen "DataQualityChecker" blir brukt til å sjekke for manglende og ekstreme verdier. Siste klassen er "ObservationProcessor" som blir brukt til å hente dataen å strukturere det på riktig måte. Disse klassene blir brukt i notebookene "luftkvalitet_api.ipynb" og "weather_api_45.ipynb" under mappen "notebooks". Her vil det også være grundigere forklaring på hvorfor jeg har valgt å bruke de ulike funksjonene. 
+
+
 "Prediksjonsanalyse.py"
 Under denne filen er det laget to ulike klasser med flere funksjonen i. 
 Klassen kalt "HistoricData" leser av en csv-fil og bruker dataen herfra til å trene en modell til å lage en graf. Til dette brukes metoden scikit-learn. Videre i klassen "Predictions10years" predikeres framtidig data. Dette er også gjort med scikit-learn og modellen som er trent opp i klassen "HistoricData". Til slutt vises både grafen laget i "HistoricData" og prediksjonene i et plot. Disse klassene og funksjonene blir kalt under mappen "notebooks" i filen "Prediksjon.ipynb".
