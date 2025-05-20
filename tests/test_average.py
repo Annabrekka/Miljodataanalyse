@@ -128,3 +128,17 @@ class TestFindStd(BaseTestData):
         self.assertEqual(result_df.loc[0, "year"], 2020)
         self.assertEqual(result_df.loc[0, "month"], 1)
 
+#Laster ned begge testene fra begge klassene og legger den til i suite. 
+def suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestData))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestDataNegative))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestFindAverage))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestFindMedian))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestFindStd))
+    return suite
+
+
+if __name__ == '__main__':
+    runner = unittest.TextTestRunner(verbosity=2)  
+    runner.run(suite()) 
