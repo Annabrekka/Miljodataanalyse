@@ -2,7 +2,6 @@ import sys
 import os
 import pytest
 import pandas as pd
-from io import StringIO
 import matplotlib
 matplotlib.use("Agg")   # Unngår å printe grafen ved testing
 
