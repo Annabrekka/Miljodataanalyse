@@ -1,51 +1,48 @@
 import sys
 import os
-import pytest
+import unittest
 import pandas as pd
 import matplotlib
-matplotlib.use("Agg")   # Unngår å printe grafen ved testing
+matplotlib.use("Agg")
 
 # Legger til src/ til systemets import-sti
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 
-nedbor_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_precipitaion.csv"))
+from interaktiv_visualisering import InteraktivVisualisering
+
+# Filstier
+nedbor_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Precipitaion.csv"))
 temp_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Temperatur.csv"))
 vind_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Wind.csv"))
 
-@pytest.fixture
-def df_nedbor():
-    return pd.read_csv(nedbor_fil)
+class TestInteraktivVisualisering(unittest.TestCase):
 
-@pytest.fixture
-def df_temp():
-    return pd.read_csv(temp_fil)
+    def setUp(self):      # Leser inn filene
+        self.df_nedbor = pd.read_csv(nedbor_fil)
+        self.df_temp = pd.read_csv(temp_fil)
+        self.df_vind = pd.read_csv(vind_fil)
 
-@pytest.fixture
-def df_vind():
-    return pd.read_csv(vind_fil)
+    def test_init_og_attributter(self):     # Tester at df inneholder en 'date' kolonne og at datatype og kolonne inneholder riktige verdier
+        vis = InteraktivVisualisering(self.df_nedbor, datatype='nedbor', kolonne='value')
+        self.assertIn('date', vis.df.columns)
+        self.assertTrue(hasattr(vis, 'dato_slider'))
+        self.assertEqual(len(vis.dato_slider.options), len(vis.df['date'].dt.date.unique()))
+        self.assertEqual(vis.datatype, 'nedbor')
+        self.assertEqual(vis.kolonne, 'value')
 
-from interaktiv_visualisering import InteraktivVisualisering  
+    def test_hent_tittel_og_enhet(self):      # Tester at riktig tittel og enhet hentes
+        vis = InteraktivVisualisering(self.df_temp, datatype='temp', kolonne='value')
+        self.assertEqual(vis._hent_tittel(), 'Temperatur over tid')
+        self.assertEqual(vis._hent_enhet(), 'Temperatur (°C)')
 
-class TestInteraktivVisualisering:
-
-    def test_init_og_attributter(self, df_nedbor):  
-        vis = InteraktivVisualisering(df_nedbor, datatype='nedbor', kolonne='value')
-        assert 'date' in vis.df.columns    # Sjekker at dataframe er kopiert og 'date' er lagt til
-        assert hasattr(vis, 'dato_slider')   # Sjekker at dato_slider er en widget med riktig antall alternativer
-        assert len(vis.dato_slider.options) == len(vis.df['date'].dt.date.unique())
-        assert vis.datatype == 'nedbor' # Sjekker datatype og kolonne
-        assert vis.kolonne == 'value'
-
-    def test_hent_tittel_og_enhet(self, df_temp):    # Tester at tittel og enhet blir hentet
-        vis = InteraktivVisualisering(df_temp, datatype='temp', kolonne='value')
-        assert vis._hent_tittel() == 'Temperatur over tid'
-        assert vis._hent_enhet() == 'Temperatur (°C)'
-
-    def test_oppdater_graf_kjorer_uten_feil(self, df_vind):    # Tester at grafen blir vist uten feil
-        vis = InteraktivVisualisering(df_vind, datatype='wind', kolonne='value')
+    def test_oppdater_graf_kjorer_uten_feil(self):      # Tester at funkjsonen _oppdater_graf() kjører riktig og ikke kaster feil
+        vis = InteraktivVisualisering(self.df_vind, datatype='wind', kolonne='value')
         dato_start = vis.df['date'].dt.date.min()
         dato_slutt = vis.df['date'].dt.date.max()
         try:
-            vis._oppdater_graf((dato_start, dato_slutt))  # Skulle ikke kaste feil
+            vis._oppdater_graf((dato_start, dato_slutt))
         except Exception as e:
-            pytest.fail(f"_oppdater_graf kastet en uventet feil: {e}")
+            self.fail(f"_oppdater_graf kastet en uventet feil: {e}")
+
+if __name__ == "__main__":     # Kjører testen
+    unittest.main()

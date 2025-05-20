@@ -1,25 +1,22 @@
-# Project
-
-The course has portfolio assessment which forms the basis for the grade in the subject. Portfolio assessment is based on the work you do in your project. The project should be solved in groups, and it is sufficient for one person in the group to submit the answer in Blackboard. When you have solved all the tasks, upload the entire answer as one zip file in BB. The zip file should contain the entire project directory, including all source code, .git directory, etc. It is important that you include the .git directory (an "invisible" directory in the root directory of your project) because it contains your version history. You will receive written feedback on what you have submitted in BB, and you can make improvements to the code right up until the final portfolio submission.
+I dette prosjektet har vi hentet inn værdata i form av temperatur, nedbør, vind og luftkvalitet. Vi har ryddet opp i dataen og filtrert ut undøvendige verdier og informasjon og det som ikke er innenfor en rimelig grense. For temperatur, nedbør og vind har vi funnet gjennomsnitt og median for hver måned og standard avvik. Videre brukte vi dette til å lage en visualisering av dataen, både i form av en graf og et scatterplot, og som en interaktiv graf hvor brukeren selv kan velge datointervall. For luftkvalitet har det blitt funnet gjennomsnitt per dag i 2017. Her er det også visualisert hvordan temperatur, nedbør og vind påvirker luftkvaliteten. Til slutt i oppgaven har det blitt laget en regresjonanalyse som predikerer hvordan disse verdiene vil være i fremtiden. 
 
 
-The project is divided into the following parts:
+Vi har delt prosjektet inn i mappene data, docs, notebooks, resources, src og tests, her en en oversikt over hva man finner i de ulike mappene:
 
-1. General Part: Background information about the project and tasks that are common to all parts.
-2. Portfolio Part 1: Focuses on data collection and preparation.
-3. Portfolio Part 2: Focuses on data analysis and visualization.
+Data: 
+Under denne mappen finnes all dataen vi bruker i prosjektet. I undermappen Avarage finner man data for gjennomsnitt per måned for nedbør, temperatur og vind. 
 
-Final project has to be delivered in Inspera for assessment. The grading scale is A-F.
+Docs:
+Under denne mappen ligger KI-deklarasjon. 
 
-```{Note}
-We do not recommend starting work on the project before week 6, as we might make changes to it. Until then, you can prepare yourself and focus on learning topics relevant to increasing your competency to deliver the project successfully.
-```
+Notebooks:
+Under denne mappen finnes alle notebookene våre. Her har vi kalt på klassene
 
-```{Note}
-Your final project solution should be submitted for assessment in Inspera. Please ensure that the virtual environment folder is NOT included in the zip file you upload. Only the requirements.txt file should be included. Additionally, make your central repository publicly accessible and share the link in Inspera.
-```
+Resources:
 
 
-```{important}
-To access the project template, click <a href="https://jupyterhub.apps.stack.it.ntnu.no/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgit.ntnu.no%2FTDT4114%2Fproj_environment.git&#38;urlpath=lab%2Ftree%2Fproj_environment.git%2FREADME.md&#38;branch=main">here</a> to copy source files to Jupyter Hub (NTNU). And/Or clone/download from the GitHub repository: <a href="https://git.ntnu.no/TDT4114/proj_environment">https://git.ntnu.no/TDT4114/proj_environment</a>.
-```
+Src:
+Her har vi laget alle klassene som brukes i prosjektet. 
+
+Tests:
+Her har vi laget enhetstestene som tester og 

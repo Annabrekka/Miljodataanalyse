@@ -1,63 +1,56 @@
 import sys
 import os
-import pytest
+import unittest
 import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 
-# Legg til src/ til systemets import-sti
+# Legger til src/ til systemets import-sti
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
-
-nedbor_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Precipitaion.csv"))
-temp_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Temperatur.csv"))
-vind_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Wind.csv"))
-
-@pytest.fixture
-def df_nedbor():
-    return pd.read_csv(nedbor_fil)
-
-@pytest.fixture
-def df_temp():
-    return pd.read_csv(temp_fil)
-
-@pytest.fixture
-def df_vind():
-    return pd.read_csv(vind_fil)
 
 from visualisering_seaborn import VisualiseringSeaborn
 
-class TestVisualiseringSeaborn:
+# Filstier
+nedbor_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Precipitaion.csv"))
 
-    def test_last_data(self, df_nedbor):   # Tester at vi har en dataframe med tre rader og en kolonne "date"
+class TestVisualiseringSeaborn(unittest.TestCase):
+    
+    def setUp(self):
+        self.df_nedbor = pd.read_csv(nedbor_fil)
+
+    def test_last_data(self):         # Tester at df ikke er tomog at den inneholder 'date'-kolonnen
         vis = VisualiseringSeaborn(nedbor_fil, enhet="mm", tittel="Nedbør")
         vis.last_data()
-        assert vis.df is not None
-        assert "date" in vis.df.columns
-        assert len(vis.df) >=0
+        self.assertIsNotNone(vis.df)
+        self.assertIn("date", vis.df.columns)
+        self.assertGreaterEqual(len(vis.df), 0)
 
-    def test_filtrer_maaned(self, df_nedbor):   # Tester at vi fortsatt har data etter at vi har filtrert og at vi kun har data fra måneden januar. 
+    def test_filtrer_maaned(self):      # Tester at den kan filtrere ut data fra én måned
         vis = VisualiseringSeaborn(nedbor_fil, enhet="mm", tittel="Nedbør")
         vis.last_data()
         vis.filtrer_maaned(1)
-        assert vis.df_filtrert is not None
-        assert all(vis.df_filtrert["date"].dt.month == 1)
+        self.assertIsNotNone(vis.df_filtrert)
+        self.assertTrue(all(vis.df_filtrert["date"].dt.month == 1))
 
-    def test_filtrer_maaned_uten_last_data(self, df_nedbor):   # Tester at vi har lastet inn data før vi starter testen
+    def test_filtrer_maaned_uten_last_data(self):      # Tester at det gir feil om man prøver å filtrere uten å ha lastet inn data
         vis = VisualiseringSeaborn("avarage_precipitation.csv", enhet="mm", tittel="Test")
-        with pytest.raises(ValueError, match="Data må lastes inn før filtrering"):
+        with self.assertRaisesRegex(ValueError, "Data må lastes inn før filtrering"):
             vis.filtrer_maaned(1)
 
-    def test_plott_uten_filtrering(self, df_nedbor):    # Tester at funksjonen plott() ikke kjøres uten at dataen er filtrert
+    def test_plott_uten_filtrering(self):     # Tester at man ikk ekan plotte uten å filtrere data først
         vis = VisualiseringSeaborn(nedbor_fil, enhet="mm", tittel="Nedbør")
         vis.last_data()
-        with pytest.raises(ValueError, match="Data ikke filtrert"):
+        with self.assertRaisesRegex(ValueError, "Data ikke filtrert"):
             vis.plott()
 
-    def test_plott_med_filtrering(self, df_nedbor):    # Tester at funksjonen plott() kjører som den skal etter at dataen er filtrert
+    def test_plott_med_filtrering(self):    # Tester at det går å plotte når man har lastet og filtrert data riktig
         vis = VisualiseringSeaborn(nedbor_fil, enhet="mm", tittel="Nedbør")
         vis.last_data()
         vis.filtrer_maaned(1)
         try:
-            vis.plott() 
+            vis.plott()
         except Exception as e:
-            pytest.fail(f"plott() kastet en uventet feil: {e}")
+            self.fail(f"plott() kastet en uventet feil: {e}")
+
+if __name__ == "__main__":    # Kjører testen
+    unittest.main()
