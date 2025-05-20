@@ -1,12 +1,13 @@
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 import unittest
 import pandas as pd
 import math
 from datetime import datetime
-from Average import Data, FindAverage, FindMedian, FindStd 
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from src.Average import Data, FindAverage, FindMedian, FindStd 
 
 # Lager en basetest som oppretter en dataframe som benyttes videre i de andre testene
 class BaseTestData(unittest.TestCase):
@@ -128,17 +129,8 @@ class TestFindStd(BaseTestData):
         self.assertEqual(result_df.loc[0, "year"], 2020)
         self.assertEqual(result_df.loc[0, "month"], 1)
 
-#Laster ned begge testene fra begge klassene og legger den til i suite. 
-def suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestData))
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestDataNegative))
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestFindAverage))
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestFindMedian))
-    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestFindStd))
-    return suite
 
 
 if __name__ == '__main__':
-    runner = unittest.TextTestRunner(verbosity=2)  
-    runner.run(suite()) 
+    unittest.main()
+    

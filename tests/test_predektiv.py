@@ -1,18 +1,19 @@
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import unittest
 import pandas as pd
 import numpy as np
-from Prediksjonsanalyse import HistoricData
-from Prediksjonsanalyse import Prediction10Years  
+import matplotlib.pyplot as plt
+from src.Prediksjonsanalyse import HistoricData, Prediction10Years  
+
 
 class TestHistoricData(unittest.TestCase):
 
     def setUp(self):
         # Laster inn avarage_temperatur filen, og filtrerer ut måned 7
-        self.historic = HistoricData("../data/Avarage/avarage_temperatur.csv")
+        self.historic = HistoricData("../data/Avarage/average_Temperatur.csv")
         self.historic.read_file(7)
 
 
@@ -48,13 +49,13 @@ class TestHistoricData(unittest.TestCase):
     
     def test_train_model_without_data(self):
         # Tester at det blir ValueError dersom vi prøver å trene modellen uten data
-        historic = HistoricData("../data/Avarage/avarage_temperatur.csv")
+        historic = HistoricData("../data/Avarage/average_Temperatur.csv")
         with self.assertRaises(ValueError):
             historic.train_model()
 
     def test_train_model_with_empty_dataframe(self):
         # Tester at det blir ValueError dersom vi prøver å trene modellen med en tom dataframe
-        historic = HistoricData("../data/Avarage/avarage_temperatur.csv")
+        historic = HistoricData("../data/Avarage/average_Temperatur.csv")
         historic.df = pd.DataFrame(columns=["year", "value"])
         with self.assertRaises(ValueError):
             historic.train_model()
@@ -73,7 +74,7 @@ class TestPrediction10Years(unittest.TestCase):
 
     def setUp(self):
         # Kjører før hver test, laster inn data og forbereder modellen
-        self.historic = HistoricData("../data/Avarage/avarage_temperatur.csv")
+        self.historic = HistoricData("../data/Avarage/average_Temperatur.csv")
         self.historic.read_file(7)
         self.historic.train_model()
         self.prediction = Prediction10Years(self.historic)
@@ -98,22 +99,3 @@ class TestPrediction10Years(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
