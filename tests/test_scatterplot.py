@@ -2,7 +2,6 @@ import sys
 import os
 import pytest
 import pandas as pd
-from io import StringIO
 import matplotlib
 matplotlib.use("Agg")
 
@@ -28,7 +27,7 @@ def df_vind():
 from scatterplot_visualisering import ScatterPlot
 
 class TestScatterPlot:
-    def test_filtrer_data(df_nedbor):     # Tester at vi kun får data fra ønsket måned
+    def test_filtrer_data(self, df_nedbor):     # Tester at vi kun får data fra ønsket måned
         sp = ScatterPlot(file_path=nedbor_fil, datatype="nedbor", kolonne="value", month=7)
         assert isinstance(sp.df_filtrert, pd.DataFrame)
         assert all(sp.df_filtrert["month"] == 7)
@@ -44,7 +43,7 @@ class TestScatterPlot:
         assert ScatterPlot(vind_fil, "wind", "value")._hent_enhet() == "Vind (m/s)"
         assert ScatterPlot(nedbor_fil, "ukjent", "value")._hent_enhet() == "Enhet"
 
-    def test_plot_data_kjorer_uten_feil(df_vind):    # Tester at grafen plottes riktig
+    def test_plot_data_kjorer_uten_feil(self, df_vind):    # Tester at grafen plottes riktig
         sp = ScatterPlot(file_path=vind_fil, datatype="wind", kolonne="value", month=7)
         try:
             sp.plot_data()
