@@ -107,7 +107,7 @@ def suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestDataCleaner))
     suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestDataQualityChecker))
-    suite.addTest(unittest.Testloader().loadTestsFromTestCase(TestObservationProcessor))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestObservationProcessor))
     return suite
 
 #Kjører nå testene. Bruker verbosity=2 som gir mer detaljerte rapporter. 
