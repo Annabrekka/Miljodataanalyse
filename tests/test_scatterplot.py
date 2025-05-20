@@ -8,7 +8,7 @@ matplotlib.use("Agg")
 # Legger til src/ til systemets import-sti
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 
-nedbor_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Precipitation.csv"))
+nedbor_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Precipitaion.csv"))
 temp_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Temperatur.csv"))
 vind_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Wind.csv"))
 
