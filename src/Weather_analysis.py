@@ -4,7 +4,7 @@ from pandas import json_normalize
 
 
 
-#Her opretter jeg klassen "DataCleaner" som brukes til å rense og håndtere data. 
+#Her opretter jeg klassen "DataCleaner" som brukes til å rense og håndtere dataen min slik at jeg får en ryddig dataframe.  
 class DataCleaner:
 
     def __init__(self, data):
