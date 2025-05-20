@@ -23,6 +23,7 @@ class FindAverage(Data):
         monthly_average_per_year.to_csv(f"../data/Avarage/average_{unit}.csv")
         print(f"Gjennomsnittet for {unit}")  
         print(monthly_average_per_year.head())
+        return monthly_average_per_year
 
 
 # Oppretter en klasse som finner medianen for de tre ulike parameterene, denne klassen bruker også klassen "Data"
@@ -35,6 +36,7 @@ class FindMedian(Data):
         monthly_median_per_year.to_csv(f'../data/Avarage/median_{unit}.csv')
         print(f"Median for {unit}")
         print(monthly_median_per_year.head())
+        return monthly_median_per_year
 
 
 # Oppretter en klasse som finner standardavik for de tre ulike parameterene, denne klassen bruker også klassen "Data"
@@ -47,6 +49,7 @@ class FindStd(Data):
         monthly_std_per_year.to_csv(f'../data/Avarage/standard_{unit}.csv')
         print(f"Standardavvik for {unit}")
         print(monthly_std_per_year.head())
+        return monthly_std_per_year
         
 
 
