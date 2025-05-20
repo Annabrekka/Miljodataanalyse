@@ -1,8 +1,10 @@
 import unittest
 import pandas as pd
 from pandas import json_normalize
-from src.Weather_analysis import DataCleaner, DataQualityChecker
+from src.Weather_analysis import DataCleaner, DataQualityChecker, ObservationProcessor
 
+#TestDataCleaner tester klassen Datacleaner. 
+#Den sjekker at den klarer å gjøre ulike endringer for å få mer oversiktelig data. 
 class TestDataCleaner(unittest.TestCase):
     #Oppretter data som vik kan bruke som eksempler 
     def setUp(self):
@@ -33,7 +35,8 @@ class TestDataCleaner(unittest.TestCase):
         self.assertNotIn("B", new_df.columns)
 
 
-
+#Testen TestDataQualityChecker tester klassen DataQualityChecker. 
+# Den sjekker dataen vår for manglende og ekstreme verdier.
 class TestDataQualityChecker(unittest.TestCase):
     #Oppretter en DataFrame som innholder ulike verdier, blant annet tommer verdier, slik at vi kan bruke den som eksempel.
     def setUp(self):
@@ -56,12 +59,55 @@ class TestDataQualityChecker(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertGreater(result["NO2"].iloc[0], 400)
 
+#Testen TestObservationProcessor tester klassen ObservationProcessor.
+# Den sjekker at den henter ut dataen vår på riktig måte. 
+class TestObservationProcessor(unittest.TestCase):
+    def test_extract_observations_with_valid_data(self):
+        #Oppretter et datasett jeg kan bruke som eksempel. 
+        sample_data = [
+            {
+                "referenceTime": "2020-01-01T00:00:00Z",
+                "sourceId": "SN18700",
+                "observations": [
+                    {"elementId": "mean(air_temperature P1D)", "value": 3.5},
+                    {"elementId": "sum(precipitation_amount P1D)", "value": 15.0}
+                ]
+            }
+        ]
+
+        processor = ObservationProcessor(sample_data)
+        result = processor.extract_observations()
+
+        #Sjekker at resultatet har riktig lengde, og at innholdet er riktig.
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0]["referenceTime"], "2020-01-01T00:00:00Z")
+        self.assertEqual(result[0]["sourceId"], "SN18700")
+        self.assertEqual(result[0]["value"], 3.5)
+        self.assertEqual(result[1]["elementId"], "sum(precipitation_amount P1D)")
+    
+    def test_extract_observations_with_missing_data(self):
+        sample_data = [
+            {
+                "referenceTime": "2020-01-01T00:00:00Z",
+                "sourceId": "SN18700"
+                # "observations" mangler
+            }
+        ]
+
+        processor = ObservationProcessor(sample_data)
+        result = processor.extract_observations()
+        #sjekker at den ikke finner neon observasjoner
+        self.assertEqual(result, [])
+
+
+
 
 #Laster ned begge testene fra begge klassene og legger den til i suite. 
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestDataCleaner))
     suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestDataQualityChecker))
+    suite.addTest(unittest.Testloader().loadTestsFromTestCase(TestObservationProcessor))
     return suite
 
 #Kjører nå testene. Bruker verbosity=2 som gir mer detaljerte rapporter. 
@@ -74,5 +120,10 @@ if __name__ == '__main__':
 
 
 
+
+
+
+
     
+
 

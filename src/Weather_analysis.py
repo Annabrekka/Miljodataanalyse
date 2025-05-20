@@ -40,9 +40,6 @@ class DataCleaner:
 
 
 
-
-
-
 #Klassen "DataQualitychecker brukes til å sjekke kvaliteten på dataene og fanger opp eventuelle problem. 
 class DataQualityChecker:
     def __init__(self, df):
@@ -74,11 +71,17 @@ class ObservationProcessor:
     def extract_observations(self):
         for i in range(len(self.data)):
             try:
+                """Henter ut:
+                 "observations" som er en liste med observasjoner 
+                 "refrencetime" som er tidspunketet for målingen 
+                 "SourceId" som er målestasjonen der målingen er gjort."""  
                 entry = self.data[i]
                 observations = entry.get('observations', None)
                 referenceTime = entry.get('referenceTime', None)
                 sourceId = entry.get('sourceId', None)
 
+                #Går gjennom hver observasjon og legger til referencetime og sourceid. 
+                #Legger deretter den utvidede observasjonen i "self.rows"
                 if observations is not None:
                     for obs in observations:
                         obs['referenceTime'] = referenceTime
@@ -89,5 +92,10 @@ class ObservationProcessor:
             except KeyError as e:
                 print(f"KeyError: {e} at index {i}")
         return self.rows
+
+
+
+
+
 
 
