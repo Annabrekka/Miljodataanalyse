@@ -13,12 +13,9 @@ I notebooken gjør vi endringer slik at vi til ender med et ryddig datasett som 
 
 
 
-
-
 Gjennomsnitt_median.ipynb - her blir gjennomsnitt, median og standardavvik for daten funnet
 Prediksjon.ipynb - her predikeres fremtidig data for temperatur, vind og nedbør
 
 
-
-
-
+visualisering.ipynb:
+I denne notebooken blir tre klasser kalt på fra mappen src, "interaktiv_visualisering.py", "scatterplot_visualisering.py" og "visualisering_seaborn.py" og fremstilt som grafer og scatterplot. For alle disse klassene er det først hentet data fra csv-filene "average_precipitaion.csv", "average_Temperatur.csv" og "average_Wind.csv". Først er klassen VisualiseringSeaborn kalt på. Denne bruker seaborn til å fremstille data fra kun én måned hvert år mellom 1975 og 2020 og man skriver selv inn hvilken måned man ønsker å se data fra. Deretter kalles klassen InteraktivVisualisering på. Denne bruker pandas, matplotlib og widgets for å hente data og fremstille en interaktiv graf med slider hvor brukeren kan velge et datointervall de ønsker å se værdata fra. Siste klassen som kalles på er ScatterPlot. Her brukes pandas til å hente data og matplotlib for å plotte scatterplottet, som viser data fra juli hvert år mellom 1975 og 2020. Til slutt er det fremstilt tre grafer som henter data fra "gjsnitt_data.csv" og "daglig_gjennomsnitt_2017.csv". Førstnavnte fil inneholder daglig gjennomsnitssdata for temperatur, vind og nedbør og sistnevnte inneholder daglig gjennomsnitsdata for luftkvalitet i 2017. Det er brukt pandas for å hente data og matplotlib for å plotte grafene. Grafene viser sammenhengen mellom luftkvalitet og temperatur, nedbør og vind. 

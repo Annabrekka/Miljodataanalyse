@@ -2,7 +2,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import ipywidgets as widgets
-from IPython.display import display
 
 class InteraktivVisualisering:
     def __init__(self, df, datatype, kolonne):
