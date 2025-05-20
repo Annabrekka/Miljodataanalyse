@@ -9,9 +9,9 @@ matplotlib.use("Agg")
 # Legger til src/ til systemets import-sti
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 
-nedbor_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/avarage_precipitation.csv"))
-temp_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/avarage_temperatur.csv"))
-vind_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/avarage_wind.csv"))
+nedbor_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Precipitation.csv"))
+temp_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Temperatur.csv"))
+vind_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avarage/average_Wind.csv"))
 
 @pytest.fixture
 def df_nedbor():
