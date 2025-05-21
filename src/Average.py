@@ -1,3 +1,7 @@
+import os
+import pandas as pd  
+
+
 # Oppretter en klasse som definerer en ny dataframe og filtrer og år og måned
 class Data:
     def __init__(self, data):
@@ -12,6 +16,7 @@ class Data:
         return df_param.groupby(["year", "month"])
 
 
+
 # Oppretter en klasse som finner gjennomsnittet for de tre ulike parameterene, denne klassen bruker også klassen "Data"
 class FindAverage(Data):
 
@@ -20,7 +25,9 @@ class FindAverage(Data):
         grouped = self.prepare_data(parameter)
         monthly_average_per_year = grouped["value"].mean().reset_index()
         monthly_average_per_year["value"] = monthly_average_per_year["value"].round(3) 
-        monthly_average_per_year.to_csv(f"../data/Avarage/average_{unit}.csv")
+        # Lagrer med trygg sti
+        save_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Avarage', f'average_{unit}.csv'))
+        monthly_average_per_year.to_csv(save_path)
         print(f"Gjennomsnittet for {unit}")  
         print(monthly_average_per_year.head())
         return monthly_average_per_year
@@ -33,7 +40,9 @@ class FindMedian(Data):
         grouped = self.prepare_data(parameter)
         monthly_median_per_year = grouped["value"].median().reset_index()
         monthly_median_per_year["value"] = monthly_median_per_year["value"].round(3)
-        monthly_median_per_year.to_csv(f'../data/Avarage/median_{unit}.csv')
+        # Lagrer med en absolutt sti
+        save_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Avarage', f'median_{unit}.csv'))
+        monthly_median_per_year.to_csv(save_path)
         print(f"Median for {unit}")
         print(monthly_median_per_year.head())
         return monthly_median_per_year
@@ -46,7 +55,9 @@ class FindStd(Data):
         grouped = self.prepare_data(parameter)
         monthly_std_per_year = grouped["value"].std().reset_index()
         monthly_std_per_year["value"] = monthly_std_per_year["value"].round(3)
-        monthly_std_per_year.to_csv(f'../data/Avarage/standard_{unit}.csv')
+        # Lagrer med absolutt sti
+        save_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Avarage', f'standard_{unit}.csv'))
+        monthly_std_per_year.to_csv(save_path)
         print(f"Standardavvik for {unit}")
         print(monthly_std_per_year.head())
         return monthly_std_per_year
