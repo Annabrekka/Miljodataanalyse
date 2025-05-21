@@ -17,12 +17,13 @@ class Data:
 
 
 
-# Oppretter en klasse som finner gjennomsnittet for de tre ulike parameterene, denne klassen bruker også klassen "Data"
+# Oppretter en klasse som finner gjennomsnittet for de tre ulike parameterene, denne klassen bruker også klassen "Data" 
 class FindAverage(Data):
 
     def mean_per_year(self, parameter, unit):
-        # Finner gjennomsnittet per måned per år, og runder av til 3 desimaler
+        # Bruker "Data" for å gruppere etter år og måned for gitt parameter
         grouped = self.prepare_data(parameter)
+        # Finner gjennomsnittet per måned per år, og runder av til 3 desimaler
         monthly_average_per_year = grouped["value"].mean().reset_index()
         monthly_average_per_year["value"] = monthly_average_per_year["value"].round(3) 
         # Lagrer med trygg sti
@@ -37,7 +38,9 @@ class FindAverage(Data):
 class FindMedian(Data):
     
     def median_per_year(self, parameter, unit):
+        # Bruker "Data" for å gruppere etter gitt parameter
         grouped = self.prepare_data(parameter)
+        # Finner medianen for gitt gruppen over per måned per år
         monthly_median_per_year = grouped["value"].median().reset_index()
         monthly_median_per_year["value"] = monthly_median_per_year["value"].round(3)
         # Lagrer med en absolutt sti
@@ -52,7 +55,9 @@ class FindMedian(Data):
 class FindStd(Data):
 
     def std_per_year(self, parameter, unit):
+        # Bruker "Data" for å gruppere etter gitt parameter
         grouped = self.prepare_data(parameter)
+        # Finner standardavviket for gitt gruppe
         monthly_std_per_year = grouped["value"].std().reset_index()
         monthly_std_per_year["value"] = monthly_std_per_year["value"].round(3)
         # Lagrer med absolutt sti

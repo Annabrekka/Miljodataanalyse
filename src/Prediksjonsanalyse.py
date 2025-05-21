@@ -5,6 +5,7 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score 
 
+# Oppretter klassen "HistoricData" som laster inn csv-filen og gjør klar for å lage treningsmodellen
 class HistoricData:
     def __init__(self, csv_path):
         self.csv_path = csv_path
@@ -13,7 +14,7 @@ class HistoricData:
         self.Y = None
         self.model = LinearRegression()
 
-
+# Funksjon som leser filen, og først passer på at det er gyldig data
     def read_file(self, maaned):
         # Passer på at det kun er gyldig data for maaneden
         if not isinstance(maaned, int):
@@ -26,6 +27,7 @@ class HistoricData:
         self.df = self.df[self.df['month'] == maaned] 
 
 
+# Funksjon som trener modellen
     def train_model(self):
         # Skal trene en modell, men må passe på at den ikke trener den uten data eller for en tom dataframe
         if self.df is None:
@@ -38,6 +40,7 @@ class HistoricData:
         self.model.fit(self.X, self.Y)
 
 
+# Funksjon som lager plottene for grafen/regresjonen
     def plot_data(self, title,ylabel):
         # Finner de historiske prediksjonene
         X_sorted = np.sort(self.X, axis = 0)
@@ -60,13 +63,17 @@ class HistoricData:
         plt.tight_layout()
         plt.show()
 
+# Funksjon som gir R2-verdi, slik at man evaluere hvor godt grafen passer punktene
     def evaluate_model(self):
         Y_pred = self.model.predict(self.X)
         self.r2 = r2_score(self.Y, Y_pred)
         print(f"R2 verdien er {self.r2}")
     
 
+# Klasse som predikerer fremtidig data
 class Prediction10Years:
+
+# Funksjon som henter den historiske dataen og modellen
     def __init__(self, historic_obj):
         self.df = historic_obj.df
         self.X = historic_obj.X
@@ -76,13 +83,14 @@ class Prediction10Years:
         self.predict_years = None
         self.future_predictions = None
 
-
+# Funksjon som oppretter en liste for fremtidige år
     def generate_future_years(self, years):
         # Finner det siste året for historisk data, og oppretter et array for å vise prediksjoner for årene framover
         current_year = self.df['year'].max()
         self.predict_years = np.array([[self.current_year + i] for i in range(1, years + 1)])
 
 
+# Funksjon som predikerer fremtiden, ved å se på den trente modellen
     def predict_future(self):
         # Lager prediksjoner for fremtidige år, ved å iterere gjennom de fremtidige årene
         self.future_predictions = self.model.predict(self.predict_years)
@@ -90,7 +98,7 @@ class Prediction10Years:
             print(f"Predikert gjennomsnittstemperatur for {self.current_year + i}: {prediction:.2f}")
 
 
-  
+# Funksjon som plotter prediksjonene og tidligere graf
     def predictions_plot(self,title, unit):
         # Plotter dataene og prediksjonene
         plt.scatter(self.X, self.Y, color='blue', label='Historiske data')
