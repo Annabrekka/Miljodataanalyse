@@ -1,8 +1,9 @@
 #Test-mappen
 Under denne mappen "tests" er det flere filer som inneholder tester av klasser og funksjoner laget under mappen "src". Enhetstester hjelper oss for å sikre at funskjonen oppfører seg slik de skal og fanger fort opp eventuelle feil. 
 
-I filen "test_weather_analysis.py" [se filen](/tests/test_weather_analysis.py) har jeg opprettet tre testklasser: TestDataCleaner, TestDataQualityChecker og TestDataObservationProccesor. Disse testene sjekker ulike funskjoner for klassen DataCleaner, DataQualityChecker og ObservationProccesor i weather_analysis.py [se filen](../src/Weather_analysis.py). Dette er funksjoner som blir brukt helt i starten av prosjektet for å behandle rådata. Det er beskrevet underveis i kodene hva som skjer. 
+OBS: For noen av test-filene lønner det seg å innstallere python 3.12 å kjør testene i denne versjonen, fordi det ikke er oppdatert med alle metoder i python 3.13.
 
+I filen "test_weather_analysis.py" [se filen](/tests/test_weather_analysis.py) har jeg opprettet tre testklasser: TestDataCleaner, TestDataQualityChecker og TestDataObservationProccesor. Disse testene sjekker ulike funskjoner for klassen DataCleaner, DataQualityChecker og ObservationProccesor i weather_analysis.py [se filen](../src/Weather_analysis.py). Dette er funksjoner som blir brukt helt i starten av prosjektet for å behandle rådata. Det er beskrevet underveis i kodene hva som skjer. 
 
 I filen "test_prediktiv.py" [se fil](/tests/test_predektiv.py) er det tester som tester funksjonene i klassene "HistoricData" og "Prediction10Years" under filen "Prediksjonsnalayse.py" [se filen](../src/Prediksjonsanalyse.py).
 
