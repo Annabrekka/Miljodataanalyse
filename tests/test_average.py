@@ -1,13 +1,16 @@
+import unittest
 import sys
 import os
-
-import unittest
 import pandas as pd
 import math
 from datetime import datetime
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
 from src.Average import Data, FindAverage, FindMedian, FindStd 
+
 
 # Lager en basetest som oppretter en dataframe som benyttes videre i de andre testene
 class BaseTestData(unittest.TestCase):
