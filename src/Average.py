@@ -20,51 +20,61 @@ class Data:
 # Oppretter en klasse som finner gjennomsnittet for de tre ulike parameterene, denne klassen bruker også klassen "Data" 
 class FindAverage(Data):
 
-    def mean_per_year(self, parameter, unit):
+    def mean_per_year(self, parameter, unit, save_file=True):
         # Bruker "Data" for å gruppere etter år og måned for gitt parameter
         grouped = self.prepare_data(parameter)
         # Finner gjennomsnittet per måned per år, og runder av til 3 desimaler
         monthly_average_per_year = grouped["value"].mean().reset_index()
         monthly_average_per_year["value"] = monthly_average_per_year["value"].round(3) 
-        # Lagrer med trygg sti
-        save_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Avarage', f'average_{unit}.csv'))
-        monthly_average_per_year.to_csv(save_path)
-        print(f"Gjennomsnittet for {unit}")  
-        print(monthly_average_per_year.head())
+       
+        # Lagrer med trygg sti dersom if save-file = True
+        # Dette gjøres fordi vi ikke vil opprette csv-fil med testene
+        if save_file:
+            save_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Avarage', f'average_{unit}.csv'))
+            monthly_average_per_year.to_csv(save_path)
+            print(f"Gjennomsnittet for {unit}")  
+            print(monthly_average_per_year.head())
+        
         return monthly_average_per_year
 
 
 # Oppretter en klasse som finner medianen for de tre ulike parameterene, denne klassen bruker også klassen "Data"
 class FindMedian(Data):
     
-    def median_per_year(self, parameter, unit):
+    def median_per_year(self, parameter, unit, save_file=True):
         # Bruker "Data" for å gruppere etter gitt parameter
         grouped = self.prepare_data(parameter)
         # Finner medianen for gitt gruppen over per måned per år
         monthly_median_per_year = grouped["value"].median().reset_index()
         monthly_median_per_year["value"] = monthly_median_per_year["value"].round(3)
-        # Lagrer med en absolutt sti
-        save_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Avarage', f'median_{unit}.csv'))
-        monthly_median_per_year.to_csv(save_path)
-        print(f"Median for {unit}")
-        print(monthly_median_per_year.head())
+
+        # Lagrer med trygg sti dersom if save-file = True
+        if save_file:
+            save_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Avarage', f'median_{unit}.csv'))
+            monthly_median_per_year.to_csv(save_path)
+            print(f"Median for {unit}")
+            print(monthly_median_per_year.head())
+        
         return monthly_median_per_year
 
 
 # Oppretter en klasse som finner standardavik for de tre ulike parameterene, denne klassen bruker også klassen "Data"
 class FindStd(Data):
 
-    def std_per_year(self, parameter, unit):
+    def std_per_year(self, parameter, unit, save_file=True):
         # Bruker "Data" for å gruppere etter gitt parameter
         grouped = self.prepare_data(parameter)
         # Finner standardavviket for gitt gruppe
         monthly_std_per_year = grouped["value"].std().reset_index()
         monthly_std_per_year["value"] = monthly_std_per_year["value"].round(3)
-        # Lagrer med absolutt sti
-        save_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Avarage', f'standard_{unit}.csv'))
-        monthly_std_per_year.to_csv(save_path)
-        print(f"Standardavvik for {unit}")
-        print(monthly_std_per_year.head())
+        
+        # Lagrer med trygg sti dersom if save-file = True
+        if save_file:
+            save_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Avarage', f'standard_{unit}.csv'))
+            monthly_std_per_year.to_csv(save_path)
+            print(f"Standardavvik for {unit}")
+            print(monthly_std_per_year.head())
+        
         return monthly_std_per_year
         
 

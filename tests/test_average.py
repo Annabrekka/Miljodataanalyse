@@ -83,7 +83,7 @@ class TestFindAverage(BaseTestData):
 
 # Tester "mean_per_year", at gjennomsnittet faktisk er som forventet og at det fremdeles blir gruppert riktig
     def test_mean_per_year(self):
-        result_df = self.average_handler.mean_per_year("mean(air_temperature P1D)", "Temperature")
+        result_df = self.average_handler.mean_per_year("mean(air_temperature P1D)", "Temperature", save_file=False)
         expected_mean = (5.0 + 7.0) / 2
         # Sjekker at resultatet ha en rad, altså en gruppe med år og måned
         self.assertEqual(len(result_df), 1)
@@ -104,7 +104,7 @@ class TestFindMedian(BaseTestData):
 
 # Tester median_per_year, at median er korrekt og at grupperingen fremdeles er ritkig
     def test_median_per_year(self):
-        result_df = self.median_handler.median_per_year("mean(air_temperature P1D)", "Temperature")
+        result_df = self.median_handler.median_per_year("mean(air_temperature P1D)", "Temperature", save_file=False)
         expected_median = 6.0 # Medianen av [5.0, 7.0]
         # Sjekker at resultatet ha en rad, altså en gruppe med år og måned
         self.assertEqual(len(result_df), 1)
@@ -125,7 +125,7 @@ class TestFindStd(BaseTestData):
 
 # Tester std_per_year, sjekker at standardavviker stemmer med forventet og at grupperingen framdeles er riktig
     def test_std_per_year(self):
-        result_df = self.std_handler.std_per_year("mean(air_temperature P1D)", "Temperature")
+        result_df = self.std_handler.std_per_year("mean(air_temperature P1D)", "Temperature", save_file=False)
         expected_std = math.sqrt(((5-6)**2 + (7-6)**2)/1) # Standardavvik av [5.0, 7.0]
         # Sjekker at resultatet ha en rad, altså en gruppe med år og måned
         self.assertEqual(len(result_df), 1)
