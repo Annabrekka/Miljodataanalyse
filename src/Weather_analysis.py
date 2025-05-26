@@ -4,7 +4,7 @@ from pandas import json_normalize
 
 
 
-#Her opretter jeg klassen "DataCleaner" som brukes til å rense og håndtere dataen min slik at jeg får en ryddig dataframe.  
+# Oppretter klassen "DataCleaner" som brukes til å rense og håndtere dataen slik at det blir en ryddig DataFrame
 class DataCleaner:
 
     def __init__(self, data):
@@ -27,27 +27,27 @@ class DataCleaner:
         return df
     
     def rename_columns(self, df, column_rename_map):
-        #Endrer navn på kolonner i DataFramen.
+        # Endrer navn på kolonner i DataFramen.
         df = df.rename(columns=column_rename_map)
         return df
 
 
     def drop_columns(self, columns_to_drop):
-        #Fjerner kolonner.
+        # Fjerner kolonner.
         self.df = self.df.drop(columns=columns_to_drop)
         return self.df
     
 
 
 
-#Klassen "DataQualitychecker brukes til å sjekke kvaliteten på dataene og fanger opp eventuelle problem. 
+# Klassen "DataQualitychecker brukes til å sjekke kvaliteten på dataene og fanger opp eventuelle problem. 
 class DataQualityChecker:
     def __init__(self, df):
         self.df = df
 
     def check_missing_values(self):
     
-        #Returnerer antall manglende verdier i DataFrame.
+        # Returnerer antall manglende verdier i DataFrame.
         
         missing = self.df.isnull().sum()
         print("Manglende verdier:\n", missing)
@@ -55,14 +55,14 @@ class DataQualityChecker:
 
     def find_extreme_values(self, column, threshold):
         
-        #Returnerer rader med verdier som overstiger en gitt grense.
+        # Returnerer rader med verdier som overstiger en gitt grense.
         
         extremes = self.df[self.df[column] > threshold]
         print(f"Ekstreme verdier i {column} over {threshold}:\n", extremes)
         return extremes
 
 
-#Klassen "ObservationProcessor" brukes til å hente og strukturere observasjoner fra dataene. 
+# Klassen "ObservationProcessor" brukes til å hente og strukturere observasjoner fra dataene. 
 class ObservationProcessor:
     def __init__(self, data):
         self.data = data
@@ -72,16 +72,16 @@ class ObservationProcessor:
         for i in range(len(self.data)):
             try:
                 """Henter ut:
-                 "observations" som er en liste med observasjoner 
-                 "refrencetime" som er tidspunketet for målingen 
+                "observations" som er en liste med observasjoner 
+                "refrencetime" som er tidspunketet for målingen 
                  "SourceId" som er målestasjonen der målingen er gjort."""  
                 entry = self.data[i]
                 observations = entry.get('observations', None)
                 referenceTime = entry.get('referenceTime', None)
                 sourceId = entry.get('sourceId', None)
 
-                #Går gjennom hver observasjon og legger til referencetime og sourceid. 
-                #Legger deretter den utvidede observasjonen i "self.rows"
+                # Går gjennom hver observasjon og legger til referencetime og sourceid. 
+                # Legger deretter den utvidede observasjonen i "self.rows"
                 if observations is not None:
                     for obs in observations:
                         obs['referenceTime'] = referenceTime

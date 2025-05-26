@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# Oppretter en klasse som lager et scatter plot
 class ScatterPlot:
     def __init__(self, file_path, datatype, kolonne, month=7):
         self.file_path = file_path
@@ -40,7 +41,7 @@ class ScatterPlot:
         else:
             return 'Data'
 
-    def _hent_enhet(self):     # Henter enhet til y-label ut ifra hvaslags data som vises
+    def _hent_enhet(self):     # Henter enhet til y-label ut ifra hva slags data som vises
         if self.datatype == 'nedbor':
             return 'Nedbør (mm)'
         elif self.datatype == 'temp':

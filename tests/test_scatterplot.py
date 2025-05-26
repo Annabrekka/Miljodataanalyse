@@ -15,19 +15,23 @@ vind_fil = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/Avar
 
 from scatterplot_visualisering import ScatterPlot
 
+# Tester klassen ScatterPlot
 class TestScatterPlot(unittest.TestCase):
 
-    def setUp(self):     # Leser inn filene
+    def setUp(self):     
+        # Leser inn filene
         self.df_nedbor = pd.read_csv(nedbor_fil)
         self.df_temp = pd.read_csv(temp_fil)
         self.df_vind = pd.read_csv(vind_fil)
 
-    def test_filtrer_data(self):     # Tester at data kun fra juli filtreres ut
+    def test_filtrer_data(self):     
+        # Tester at data kun fra juli filtreres ut
         sp = ScatterPlot(file_path=nedbor_fil, datatype="nedbor", kolonne="value", month=7)
         self.assertIsInstance(sp.df_filtrert, pd.DataFrame)
         self.assertTrue(all(sp.df_filtrert["month"] == 7))
 
-    def test_hent_tittel_og_enhet(self):      # Tester at riktig tittel og enhet hentes
+    def test_hent_tittel_og_enhet(self):      
+        # Tester at riktig tittel og enhet hentes
         self.assertEqual(
             ScatterPlot(nedbor_fil, "nedbor", "value")._hent_tittel(), "Nedbør i juli over alle år"
         )
@@ -54,12 +58,14 @@ class TestScatterPlot(unittest.TestCase):
             ScatterPlot(nedbor_fil, "ukjent", "value")._hent_enhet(), "Enhet"
         )
 
-    def test_plot_data_kjorer_uten_feil(self):     # Tester at grafen plottes riktig
+    def test_plot_data_kjorer_uten_feil(self):     
+        # Tester at grafen plottes riktig
         sp = ScatterPlot(file_path=vind_fil, datatype="wind", kolonne="value", month=7)
         try:
             sp.plot_data()
         except Exception as e:
             self.fail(f"plot_data() kastet en uventet feil: {e}")
 
-if __name__ == "__main__":     # Kjører testen
+# Kjører testen
+if __name__ == "__main__":     
     unittest.main()
