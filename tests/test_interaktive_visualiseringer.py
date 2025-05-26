@@ -1,3 +1,5 @@
+# OBS: kjør disse testene i pyhton 3.12
+
 import sys
 import os
 import unittest
