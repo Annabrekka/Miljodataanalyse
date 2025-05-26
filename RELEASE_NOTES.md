@@ -1,14 +1,10 @@
-# Release Notes
+# Release Note - Miljodataanalyse
 
-## [1.0.0] - 2025-03-05
+# Versjon 1.0
 
-### Added/Changed
+Sist endret: 26. mai 2025
 
-- Added .gitigonre
-
-### Fixed
-
-
-### Author
-
-- Changes made by Majid Rouhani
+Gruppemedlemmer: 
+Helga Sofie Jonsbråten (139178)
+Kaia Christensen Falkenstein (589955)
+Anna Eide Brekka (124161)
