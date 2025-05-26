@@ -34,7 +34,7 @@ class HistoricData:
             raise ValueError("Kan ikke trene modellen uten data") 
         if self.df.empty:
             raise ValueError("Kan ikke trene modellen med en tom dataframe") 
-        #trener modellen, basert på x- og y-verdier
+        # Trener modellen, basert på x- og y-verdier
         self.X = self.df['year'].values.reshape(-1, 1)
         self.Y = self.df['value'].values
         self.model.fit(self.X, self.Y)

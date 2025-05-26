@@ -2,7 +2,7 @@ import os
 import pandas as pd  
 
 
-# Oppretter en klasse som definerer en ny dataframe og filtrer og år og måned
+# Oppretter en base-klasse som definerer en ny dataframe og filtrer og år og måned
 class Data:
     def __init__(self, data):
         self.df = data

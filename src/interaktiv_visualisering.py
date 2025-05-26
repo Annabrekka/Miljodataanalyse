@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import ipywidgets as widgets
 
+# Oppretter en klasse som lager en interaktiv visualisering
 class InteraktivVisualisering:
     def __init__(self, df, datatype, kolonne):
         self.df = df.copy()

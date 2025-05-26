@@ -33,7 +33,7 @@ class BaseTestData(unittest.TestCase):
 # Tester klassen "Data"
 class TestData(BaseTestData):
 
-# Oppretter en dataframe for datahåndtering    
+# Oppretter en DataFrame for datahåndtering    
     def setUp(self):
         super().setUp() # Kaller på setUp() fra baseklassen
         self.data_handler = Data(data = self.df)
@@ -59,7 +59,7 @@ class TestDataNegative(BaseTestData):
         grouped = self.data_handler.prepare_data("parameter_nonexicting")
         self.assertEqual(len(grouped.groups), 0)
 
-# Tester at det "prepare_data" håndterer et tomt datasett og returnerer en tom gruppering
+# Tester at "prepare_data" håndterer et tomt datasett og returnerer en tom gruppering
     def test_prepare_data_empty_dataframe(self):
         # Oppretter en tom dataframe
         empty_df = pd.DataFrame({
@@ -76,7 +76,7 @@ class TestDataNegative(BaseTestData):
 # Tester klassen "FindAverage"
 class TestFindAverage(BaseTestData):
         
-# Oppretter en datafram for å teste FindAverage
+# Oppretter en DataFrame for å teste FindAverage
     def setUp(self):
         super().setUp() # Kaller på setUp() fra baseklassen
         self.average_handler = FindAverage(data = self.df)
@@ -85,7 +85,7 @@ class TestFindAverage(BaseTestData):
     def test_mean_per_year(self):
         result_df = self.average_handler.mean_per_year("mean(air_temperature P1D)", "Temperature")
         expected_mean = (5.0 + 7.0) / 2
-        # Sjekker at resultatet ha en rad, altså en gruppe med år og måned
+        # Sjekker at resultatet har en rad, altså en gruppe med år og måned
         self.assertEqual(len(result_df), 1)
         # Sjekker at gjennomsnittsverdien stemmer, med 3 desimaler
         self.assertAlmostEqual(result_df.loc[0, "value"], expected_mean, places=3)
@@ -97,16 +97,16 @@ class TestFindAverage(BaseTestData):
 # Tester klassen "FindMedian"
 class TestFindMedian(BaseTestData):
         
-# Oppretter en datafram for å teste FindMedian
+# Oppretter en DataFrame for å teste FindMedian
     def setUp(self):
         super().setUp() # Kaller på setUp() fra baseklassen
         self.median_handler = FindMedian(data = self.df)
 
-# Tester median_per_year, at median er korrekt og at grupperingen fremdeles er ritkig
+# Tester median_per_year, at median er korrekt og at grupperingen fremdeles er riktig
     def test_median_per_year(self):
         result_df = self.median_handler.median_per_year("mean(air_temperature P1D)", "Temperature")
         expected_median = 6.0 # Medianen av [5.0, 7.0]
-        # Sjekker at resultatet ha en rad, altså en gruppe med år og måned
+        # Sjekker at resultatet har en rad, altså en gruppe med år og måned
         self.assertEqual(len(result_df), 1)
         # Sjekker at medianen stemmer, med 3 desimaler
         self.assertAlmostEqual(result_df.loc[0, "value"], expected_median, places=3)
@@ -116,9 +116,10 @@ class TestFindMedian(BaseTestData):
        
 
 
+# Tester klassen "FindStd"
 class TestFindStd(BaseTestData):
         
-# Oppretter en datafram for å teste FindMedian
+# Oppretter en DataFrame for å teste FindMedian
     def setUp(self):
         super().setUp() # Kaller på setUp() fra baseklassen
         self.std_handler = FindStd(data = self.df)
@@ -127,7 +128,7 @@ class TestFindStd(BaseTestData):
     def test_std_per_year(self):
         result_df = self.std_handler.std_per_year("mean(air_temperature P1D)", "Temperature")
         expected_std = math.sqrt(((5-6)**2 + (7-6)**2)/1) # Standardavvik av [5.0, 7.0]
-        # Sjekker at resultatet ha en rad, altså en gruppe med år og måned
+        # Sjekker at resultatet har en rad, altså en gruppe med år og måned
         self.assertEqual(len(result_df), 1)
         # Sjekker at standardavvik stemmer, med 3 desimaler
         self.assertAlmostEqual(result_df.loc[0, "value"], expected_std, places=3)

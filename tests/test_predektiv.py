@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from src.Prediksjonsanalyse import HistoricData, Prediction10Years  
 
 
+# Tester klassen HistoricData
 class TestHistoricData(unittest.TestCase):
 
     def setUp(self):
@@ -36,10 +37,9 @@ class TestHistoricData(unittest.TestCase):
         # Tester for en tekststreng, forventer altså at testen skal få en TypeError
         with self.assertRaises(TypeError): 
             self.historic.read_file("juli")
-        # Tester for en måned som ikke finnes i dataframen, sjekker om dataframen er tom som forventet
+        # Tester for en måned som ikke finnes i DataFramen, sjekker om DataFramen er tom som forventet
         with self.assertRaises(ValueError):
             self.historic.read_file(13)
-        #self.assertTrue(self.historic.df.empty)
 
 
     
@@ -62,7 +62,7 @@ class TestHistoricData(unittest.TestCase):
 
 
     def test_train_model_with_empty_dataframe(self):
-        # Tester at det blir ValueError dersom vi prøver å trene modellen med en tom dataframe
+        # Tester at det blir ValueError dersom vi prøver å trene modellen med en tom DataFrame
         # Finner den absolutte stien
         csv_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'Avarage', 'average_Temperatur.csv'))
         self.historic = HistoricData(csv_path)

@@ -1,7 +1,7 @@
-# Visualisering som graf ved bruk av seaborn
 import pandas as pd
 import seaborn as sns
 
+# Oppretter en klasse som bruker seaborn for å lage en visualisering
 class VisualiseringSeaborn:
     def __init__(self, filsti, enhet, tittel):
         self.filsti = filsti
